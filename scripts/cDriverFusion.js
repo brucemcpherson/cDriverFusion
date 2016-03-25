@@ -350,8 +350,8 @@ var DriverFusion = function (handler,tableId,title,fusionOb) {
           }
         }
         else {
-          // - its a new one (boolean not available in fusion)
-          cols[c] = (typeof d[c] === "boolean" ? "string" : typeof d[c]);
+          // - its a new one (boolean not available in fusion) .. added object to treat everything else as string
+          cols[c] = (typeof d[c] === "boolean" || typeof d[c] === "object" ? "string" : typeof d[c]);
         }
       });
     });
