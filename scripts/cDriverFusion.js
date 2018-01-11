@@ -235,7 +235,6 @@ var DriverFusion = function (handler,tableId,title,fusionOb) {
         sqlString = "SELECT " + fs + " FROM " + siloId + qr.data;
         var options = {hdrs: false};
         fr = FusionTables.Query.sqlGet(sqlString,options);
-        
         // need to convert to key pairs
         if (fr && fr.rows && fr.columns) { 
           result = fr.rows.map(function(r) {
@@ -251,6 +250,7 @@ var DriverFusion = function (handler,tableId,title,fusionOb) {
                 }
               }
             });
+
             return o;
           }) ;
         }
@@ -342,7 +342,7 @@ var DriverFusion = function (handler,tableId,title,fusionOb) {
     obs.forEach (function(u) {
       var d = parentHandler.flatten(u);
       Object.keys(d).forEach(function(c) {
-        Logger.log(typeof(d[c]) + '-' + c +'-'+ cols[c]);
+       
         if (cols.hasOwnProperty(c)){
           if (cols[c] === 'undefined') {
             cols[c] = cUseful.isDateObject(d[c]) ? 'DATETIME': typeof d[c];
@@ -357,7 +357,7 @@ var DriverFusion = function (handler,tableId,title,fusionOb) {
 
           // - its a new one (boolean not available in fusion) .. added object to treat everything else as string
           cols[c] = (typeof d[c] === "boolean" || cUseful.isObject(d[c]) ? "string" : typeof d[c]);
-          Logger.log('set cols[c] to ' + cols[c]);
+          
         }
       });
     });
@@ -447,7 +447,6 @@ var DriverFusion = function (handler,tableId,title,fusionOb) {
             
             // write it
             var r = parentHandler.rateLimitExpBackoff ( function () { 
-              Logger.log(sqlString);
               return FusionTables.Query.sql(sqlString); 
             } ) ;
             //build up handle keys
